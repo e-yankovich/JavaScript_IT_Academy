@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const regExp = /[0-9]+/;
+
+        function containsDigit(str){
+            return regExp.test(str);
+        }
+
+        function isNotNumber(str){
+            return isNaN(str);
+        }
+
+        function validation(str, check){
+            
+            if (str == null){
+                 return 'Ввод данных отменен!'; 
+            }
+            else if (str == ''){
+                return 'Поле не должно быть пустым!';
+            }
+            else if (check(str)){
+                 return('Вы ввели данные некорректно!'); 
+            }
+            else if (str.indexOf(" ") != -1){
+                return('Введите данные без пробела!');
+            }
+            else {
+                return "";
+            }
+        }
+
+        function ask(prompt_str, isAge, isError = false){
+            let data = prompt(prompt_str);
+            let validationResult = "";
+            if (isAge){
+                validationResult = validation(data, isNotNumber);
+            }
+            else{
+                validationResult = validation(data, containsDigit);
+            }
+
+            if (validationResult == ""){
+                return data;
+            }
+            else {
+                if (!isError){
+                    prompt_str = validationResult + " " + prompt_str; 
+                }
+                return ask(prompt_str, isAge, true);
+            }
+        }
+        const surname = ask("Введите фамилию.", false);    
+        const name = ask("Введите имя.", false);
+        const patronymic = ask("Введите отчество.", false);
+        const age = ask("Возраст в годах.", true);
+        const is_male = confirm("Если ваш пол мужской, нажмите 'OK', если ваш пол женский, нажмите 'Cancel'.");
+
+        let gender_string = "";
+        if (is_male) 
+        {
+            gender_string += "мужской";
+        }
+        else 
+        {
+            gender_string += "женский";
+        }
+
+        let retirement_age = "нет";
+        if ((is_male && age >= 63) || (!is_male && age >= 58))
+        {
+            retirement_age = "да"
+        }
+
+
+        let answer = `        ФИО: ${surname} ${name} ${patronymic}
+        возраст, лет: ${age}
+        возраст, дней: ${age*365}
+        пол: ${gender_string}
+        пенсионный возраст: ${retirement_age}`;
+        
+        alert(answer);
+    </script>
+</body>
+</html>
+
+
+
+
