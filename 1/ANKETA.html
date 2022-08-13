@@ -80,11 +80,12 @@
         }
 
 
-        let answer = `        ФИО: ${surname} ${name} ${patronymic}
-        возраст, лет: ${age}
-        возраст, дней: ${age*365}
-        пол: ${gender_string}
-        пенсионный возраст: ${retirement_age}`;
+        let answer = `        ваше ФИО: ${surname} ${name} ${patronymic}
+        ваш возраст в годах: ${age}
+        ваш возраст в днях: ${age*365}
+        через 5 лет вам будет: ${age+5}
+        ваш пол: ${gender_string}
+        вы на пенсии: ${retirement_age}`;
         
         alert(answer);
     </script>
