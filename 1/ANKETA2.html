@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>      
+    do{
+        var surname = prompt("Введите фамилию.");
+    } while (surname === null || surname === "");
+
+    do{
+        var firstName = prompt("Введите имя.");
+    } while (!firstName);
+
+    do{
+        var patronymic = prompt("Введите отчество.");
+    } while (!patronymic);
+
+    do{
+        askAge = prompt("Введите возраст в годах.");
+        age = parseInt(askAge);
+    } while ((!age) || Number.isNaN(age));
+
+    let gender = confirm("Если ваш пол мужской, нажмите 'OK', если ваш пол женский, нажмите 'Cancel'.");
+
+    let retirement_age = gender?63:58;
+
+    alert("ваше ФИО: " + surname + " " + firstName + " " + patronymic + "\n" +
+    "ваш возраст в годах: " + age + "\n" +
+    "ваш возраст в днях: " + (age*365) + "\n" +
+    "через 5 лет вам будет: " + (age+5) + "\n" +
+    "ваш пол: " + (gender?"мужской":"женский") + "\n" +
+    "вы на пенсии: " + ((age>=retirement_age)?"да":"нет")
+    );
+    </script>
+</body>
+</html>
+
+
+
+

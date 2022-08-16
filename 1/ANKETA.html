@@ -60,7 +60,8 @@
         const surname = ask("Введите фамилию.", false);    
         const name = ask("Введите имя.", false);
         const patronymic = ask("Введите отчество.", false);
-        const age = ask("Возраст в годах.", true);
+        let age = ask("Возраст в годах.", true);
+        age = parseInt(age);
         const is_male = confirm("Если ваш пол мужской, нажмите 'OK', если ваш пол женский, нажмите 'Cancel'.");
 
         let gender_string = "";
