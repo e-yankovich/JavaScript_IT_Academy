@@ -9,40 +9,50 @@
 <body>
     <script>
         "use strict"
-        function vovelsCounter(str){
-            let strLowerCase = str.toLowerCase();
-            let strArr = strLowerCase.split('');
-            let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
-            let count1 = 0;
-            let count2;
-            let count3;
 
-            function counter1(value, index, arr){
+        function counterForEach(str){
+            str = str.toLowerCase();
+            let arr = str.split('');
+            let counter = 0;
+            let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
+            function counterFunc(value, index, arr){
                 if (vowels.includes(value)){
-                    count1++;
+                    counter++;
                 }
             }
-            strArr.forEach(counter1);
-            
-            function counter2(value, index, arr){
+            arr.forEach(counterFunc);
+            return counter;
+        }
+
+        function counterFilter(str){
+            str = str.toLowerCase();
+            let arr = str.split('');
+            let counter = 0;
+            let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
+            function counterFunc(value, index, arr){
                 return vowels.includes(value)
             }
-            count2 = strArr.filter(counter2).length;
+            return counter = arr.filter(counterFunc).length;   
+        }
 
-            function counter3(res, value, index, arr ){
+        function counterReduse(str){
+            str = str.toLowerCase();
+            let arr = str.split('');
+            let counter = 0;
+            let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
+            function counterFunc(res, value, index, arr ){
                 if (vowels.includes(value)){
                     return res+1;
                 }
                 else return res;
             };
-            count3 = strArr.reduce(counter3, 0);
-
-            alert(`Число гласных в введенной строке равно:\n${count1}\n${count2}\n${count3}`)
+            return counter = arr.reduce(counterFunc, 0);
         }
 
-        let userString = prompt("Введите строку");
+    let userString = prompt("Введите строку");
+    
+    alert(`Число русских гласных в введенной строке равно:\n${counterForEach(userString)}\n${counterFilter(userString)}\n${counterReduse(userString)}`)
 
-        vovelsCounter(userString);
     </script>
 </body>
 </html>
