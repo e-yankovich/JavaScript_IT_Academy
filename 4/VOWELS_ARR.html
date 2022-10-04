@@ -27,18 +27,16 @@
         function counterFilter(str){
             str = str.toLowerCase();
             let arr = str.split('');
-            let counter = 0;
             let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
             function counterFunc(value, index, arr){
                 return vowels.includes(value)
             }
-            return counter = arr.filter(counterFunc).length;   
+            return arr.filter(counterFunc).length;   
         }
 
         function counterReduse(str){
             str = str.toLowerCase();
             let arr = str.split('');
-            let counter = 0;
             let vowels = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"];
             function counterFunc(res, value, index, arr ){
                 if (vowels.includes(value)){
@@ -46,7 +44,7 @@
                 }
                 else return res;
             };
-            return counter = arr.reduce(counterFunc, 0);
+            return arr.reduce(counterFunc, 0);
         }
 
     let userString = prompt("Введите строку");
