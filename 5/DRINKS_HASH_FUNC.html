@@ -58,11 +58,11 @@
 
         function getInformation(){
             let askedName = prompt("Введите название напитка");
-            if (typeof drinkStorage.getValue(askedName) === "undefined"){
+            let drinkInformation = drinkStorage.getValue(askedName);
+            if (typeof drinkInformation === "undefined"){
                 alert("Такого напитка нет");
             }
             else {
-                let drinkInformation = drinkStorage.getValue(askedName);
                 alert(`напиток: ${askedName}\nалкогольный: ${drinkInformation["alc"] ? "да" : "нет"}\nрецепт: ${drinkInformation["rec"]}`)
             }
         }
