@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="ввод информации о напитке" onclick="addDrink()">
+    <input type="button" value="получение информации о напитке" onclick="getInformation()">
+    <input type="button" value="удаление информации о напитке" onclick="deleteDrink()">
+    <input type="button" value="перечень всех напитков" onclick="showAllDrinks()">
+    <script>
+        "use strict";
+        class HashStorageClass{
+            constructor(){
+                this.vault = {};
+            }
+                 
+            addValue(key, value){
+                this.vault[key] = value;
+            }
+
+            getValue(key){
+                return this.vault[key];
+            }
+
+            deleteValue(key){
+                if (key in this.vault) {
+                    delete this.vault[key];
+                    return true;
+                }
+                else return false;
+            }
+            getKeys(){
+                let arr = [];
+                for (let key in this.vault){
+                    arr.push(key);
+                }
+                return arr;
+            }
+        }
+
+        let drinkStorage = new HashStorageClass();
+        drinkStorage.addValue("Маргарита", {"alc":true, "rec":"50 мл текилы, 20 мл «Куантро», 15 мл свежевыжатого сока лайма, лёд в кубиках"});
+        drinkStorage.addValue("Апероль Шприц",{"alc":true, "rec":"100 мл Апероля, 100 мл Просекко, 20 мл содовой, 40 г апельсина, лёд в кубиках"});
+        drinkStorage.addValue("Безалкогольный Мохито", {"alc":false, "rec":"150 мл содовой, 15 мл сахарного сиропа, 80 г лайма, 3 г мяты, дроблёный лед"});
+
+        function addDrink(){
+            let name = prompt("Введите название напитка");
+            let recipe = prompt("Введите рецепт приготовления напитка");
+            let alcohol = confirm('Если напиток содержит алкоголь, нажмите "ОК", если нет - "Cancel"');
+            let information = {
+                alc: alcohol,
+                rec: recipe
+            }
+            drinkStorage.addValue(name, information);
+        }
+        
+
+        function getInformation(){
+            let askedName = prompt("Введите название напитка");
+            let drinkInformation = drinkStorage.getValue(askedName);
+            if (typeof drinkInformation === "undefined"){
+                alert("Такого напитка нет");
+            }
+            else {
+                alert(`напиток: ${askedName}\nалкогольный: ${drinkInformation["alc"] ? "да" : "нет"}\nрецепт: ${drinkInformation["rec"]}`)
+            }
+        }
+
+        function deleteDrink(){
+            let deleteItem = prompt("Какой напиток удалить?");
+            drinkStorage.deleteValue(deleteItem) ? alert("Напиток удалён успешно") : alert("Такого напитка нет");
+        }
+
+        function showAllDrinks(){
+            alert(drinkStorage.getKeys().join(", "));
+        }
+
+    </script>
+</body>
+</html>
