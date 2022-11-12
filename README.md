@@ -1,2 +1,2 @@
 # JavaScript_IT_Academy
-[Валидация формы](JavaScript_IT_Academy/8/VALID_FORM.html)
+[Валидация формы](8/VALID_FORM.html)
