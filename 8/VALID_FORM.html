@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event){ 
+            initForm();
+        });
+    </script>
+    <style>
+        div{
+            display: flex;
+        }
+        p{
+            display:initial;
+            margin: 0px;
+            color:red
+        }
+        .label{
+            width: 170px;
+        }
+        .longtext{
+            width: 460px;
+        }
+        .midtext1{
+            width: 300px;
+        }
+        .midtext2{
+            width: 200px;
+        }
+        .shorttext{
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+    <form name='valid_form' id =v_form action="https://fe.it-academy.by/TestForm.php" novalidate>
+        <div>
+            <label class="label">Разработчики:</label>
+            <input type="text" name="developers" class="longtext" onblur = "validationDevelopers(false)">
+            <p id="errMessDevelopers"></p>
+        </div>
+        <div>
+            <label class="label">Название сайта:</label>
+            <input type="text" name="sitename" class="longtext" onblur = "validationSitename(false)">
+            <p id="errMessSitename"></p>
+        </div>
+        <div>
+            <label class="label">URL сайта:</label>
+            <input type="text" name="siteurl" class="midtext1" onblur = "validationSiteurl(false)"">
+            <p id="errMessSiteurl"></p>
+        </div>
+        <div>
+            <label class="label">Дата запуска сайта:</label>
+            <input type="date" name="startdate" class="shorttext" onblur = "validationStartdate(false)">
+            <p id="errMessStartdate"></p>
+        </div>
+        <div>
+            <label class="label">Посетителей в сутки:</label>
+            <input type="text" name="visitors" class="shorttext" onblur = "validationVisitors(false)">
+            <p id="errMessVisitors"></p>
+        </div>
+        <div>
+            <label class="label">E-mail для связи:</label>
+            <input type="email" name="email" class="midtext2" onblur = "validationEmail(false)">
+            <p id="errMessEmail"></p>
+        </div>
+        <div>
+            <label class="label">Рубрика каталога:</label>
+            <select name="division" class="midtext2" onchange="validationDivision(false)">
+                <option value="1">здоровье</option>
+                <option value="2">домашний уют</option>
+                <option value="3">бытовая техника</option>
+            </select>
+            <p id="errMessDivision"></p>
+        </div>
+        <div>
+            <label class="label">Размещение:</label>
+            <input type="radio" id="free" name="payment" value="бесплатное" onchange = "validationPayment(false)">
+            <label for="free">бесплатное</label>
+            <input type="radio" id="fee" name="payment" value="платное" onchange = "validationPayment(false)">
+            <label for="fee">платное</label>
+            <input type="radio" id="vip" name="payment" value="vip" onchange = "validationPayment(false)">
+            <label for="vip">VIP</label>
+            <p id="errMessPayment"></p>
+        </div>
+        <div>
+            <label class="label">Разрешить отзывы</label>
+            <input type="checkbox" id="reviewpermission" name="review" onchange = "validationReview(false)">
+            <p id="errMessReview"></p>
+        </div>
+        <div>
+            <label class="label">Описание сайта</label>
+        </div>
+        <div>
+            <textarea name="description" rows="3" cols="84" onblur = "validationDescription(false)"></textarea>
+            <p id="errMessDescription"></p>
+        </div>
+        <div>
+            <input type="submit" value="Опубликовать">
+        </div>
+    </form>
+</body>
+</html>
