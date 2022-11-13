@@ -148,8 +148,8 @@ function validationDivision(focusOnErrorElement){
     const divisionValue = divisionElement.value;
     const divisionValueError = document.getElementById("errMessDivision");
     //checking if user left form field unfilled
-    if (!divisionValue == ""){
-        divisionValueError.innerHTML = ""
+    if (divisionValue != "1"){
+        divisionValueError.innerHTML = "";
         //if data is inserted correctly there is no need to focus on form element,
         //then function returns false
         return false;
