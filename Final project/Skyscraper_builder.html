@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="draw.js"></script>
+    <script>
+        const mediaQuery = '(max-width: 750px)';
+        const mediaQueryList = window.matchMedia(mediaQuery);
+
+        mediaQueryList.addEventListener('change', event => {
+            console.log(window.innerWidth);
+            if (event.matches) {
+                // console.log('The window is now 750px or under');
+                initPositionDonor(true);
+                adaptBlocks();
+            }// else {
+            //     console.log('The window is now over 750px');
+            // }
+        });
+
+        document.addEventListener("devicechange", function(event){ 
+            alert("device");
+            initPositionDonor(true);
+            adaptBlocks();
+        });
+        document.addEventListener("DOMContentLoaded", function(event){ 
+            // alert("loaded");
+            initPositionDonor();
+            addBlock()
+            addBlock()
+            addBlock()
+            addBlock()
+            addBlock()
+        });
+        window.addEventListener("resize",function(event){
+            // alert("resize");
+            play_field = document.getElementById("play_field");
+            // alert(play_field.offsetHeight);
+            // alert(play_field.offsetWidth);
+            initPositionDonor(true);
+            adaptBlocks();
+        });
+        // window.addEventListener("MediaQueryList",function(event){
+        //     alert("media");
+        // });
+    </script>
+    <style>
+        #main_field {
+                width: 50vw;
+                height: 90vh;
+                max-height: 800px;
+                max-width: 400px;
+                margin: auto;
+            }
+        #menu{
+            height: 10vh;
+        }
+        #play_field{
+            height: 80vh;
+        }
+        @media screen and (orientation: portrait) and (max-width: 750px){
+            #main_field {
+                width: 90vw;
+                height: 90vh;
+                max-height: 800px;
+                max-width: 400px;
+                margin: auto;
+            }
+        }
+        /* body{
+            background-image: ;
+        } */
+        
+    </style>
+</head>
+<body>
+    <div id="main_field" style="background-color:rgba(0, 128, 0, 0.484);">
+        <div id="menu" style="background-color:rgba(0, 92, 128, 0.644);"></div>
+        <div id="play_field" style="background-color:rgba(98, 0, 128, 0.588);">
+            <svg id ="donor" style="position:relative; display:none;" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                 <title>Layer 1</title>
+                 <rect id="donorRect" stroke="#000" style="stroke-width: 0;" id="svg_1" height="25" width="30%" y="0" x="0" fill="#FFFF91"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
