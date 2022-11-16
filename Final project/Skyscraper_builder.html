@@ -29,7 +29,6 @@
         document.addEventListener("DOMContentLoaded", function(event){ 
             // alert("loaded");
             initPositionDonor();
-            addBlock();
             document.getElementById("play_field").addEventListener("click", function(event){
                 stopTick();
                 // addBlock();
@@ -85,6 +84,15 @@
     <div id="main_field" style="background-color:rgba(0, 128, 0, 0.484);">
         <div id="menu" style="background-color:rgba(0, 92, 128, 0.644);"></div>
         <div id="play_field" style="background-color:rgba(98, 0, 128, 0.588);">
+            <div id = "overlayText" style="position:absolute; background-color: rgba(137, 43, 226, 0.675); z-index: 100;">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Nam dicta, error at ut ea, magnam accusamus voluptates 
+                    sapiente repudiandae est hic porro tempore quae in nihil, 
+                    maiores a ducimus sed.
+                </p>
+                <input type="button" value="Start" onclick="startGame(event, false)">
+            </div>
             <svg id ="donor" style="position:relative; display:none;" xmlns="http://www.w3.org/2000/svg">
                 <g>
                  <title>Layer 1</title>

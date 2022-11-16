@@ -5,11 +5,24 @@ colors = ["red", "blue", "green"];
 blockV = 2.5;
 animationStatus = false;
 gameStatus = true;
-
+function startGame(event){
+    event.stopPropagation();
+    for (let i = 1; i <massive.length; i++){
+        massive[i].parentElement.removeChild(massive[i]);
+    }
+    massive = massive.slice(0,1);
+    gameStatus = true;
+    addBlock();
+    let ot = document.getElementById("overlayText");
+    ot.style.display = "none";
+}
 function initPositionDonor(resize = false){
     let pf = document.getElementById("play_field");
     let pf_height = pf.offsetHeight;
     let pf_width = pf.offsetWidth;
+    let ot = document.getElementById("overlayText");
+    ot.style.height = pf_height+"px";
+    ot.style.width = pf_width+"px";
     let rect = document.getElementById("donorRect");
     let rectHeight = Math.round(pf_height*0.04);
     let rectWidth = Math.round(pf_width*0.3);
@@ -42,7 +55,8 @@ function addBlock(){
     massive.push(newBlock);
     donor.parentElement.appendChild(newBlock);
     newBlock.style.top = parseFloat(newBlock.style.top) - 2*parseFloat(newBlock.style.height);
-    newBlock.style.left = parseFloat(newBlock.style.left) + 20;
+    //newBlock.style.left = parseFloat(newBlock.style.left) + 20;
+    newBlock.style.left = 0;
     animationStatus = true;
     requestAnimationFrame(tick);
 }
@@ -109,6 +123,8 @@ function stopTick(){
 
 function stopGame(){
     gameStatus = false;
+    let ot = document.getElementById("overlayText");
+    ot.style.display = "block";
 }
 
 function cropBlock(){
@@ -118,7 +134,6 @@ function cropBlock(){
     let current_left = parseFloat(block.style.left);
     let current_width = parseFloat(block.style.width);
     if (current_left+current_width <= init_left || current_left>= init_left+init_width){
-        alert("game over!");
         stopTick();
         stopGame();
         return;
