@@ -29,11 +29,11 @@
         document.addEventListener("DOMContentLoaded", function(event){ 
             // alert("loaded");
             initPositionDonor();
-            addBlock()
-            addBlock()
-            addBlock()
-            addBlock()
-            addBlock()
+            addBlock();
+            document.getElementById("play_field").addEventListener("click", function(event){
+                stopTick();
+                // addBlock();
+            });
         });
         window.addEventListener("resize",function(event){
             // alert("resize");
@@ -43,6 +43,10 @@
             initPositionDonor(true);
             adaptBlocks();
         });
+        
+
+
+
         // window.addEventListener("MediaQueryList",function(event){
         //     alert("media");
         // });
@@ -60,6 +64,7 @@
         }
         #play_field{
             height: 80vh;
+            background-image: url(images/cityFont.png);
         }
         @media screen and (orientation: portrait) and (max-width: 750px){
             #main_field {
@@ -70,9 +75,9 @@
                 margin: auto;
             }
         }
-        /* body{
-            background-image: ;
-        } */
+        body {
+            background-image: url(images/background2.jpg);
+        }
         
     </style>
 </head>
