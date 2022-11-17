@@ -1,11 +1,28 @@
+const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+const stringName="YANKOVICH_BLOCKSBUILDER_SCORE";
+
 massive = [];
 widthProportion = 0;
 heightProportion = 0;
-colors = ["red", "blue", "green"];
+colors = ["#888888", "#c6c6c6", "#eacdab"];
 blockV = 2.5;
 animationStatus = false;
 gameStatus = true;
+score = 0;
+leaderBoard = [{"name":"test","score":"250"}, {"name":"test","score":"125"}];
+username = "username";
+
+
+
+
 function startGame(event){
+    input = document.getElementById("playerName");
+    let inputedPlayerName = input.value;
+    if (inputedPlayerName.trim()== ""){
+        flashAndFocus(input);
+        return;
+    }
+    username = escape(input.value.trim());
     event.stopPropagation();
     for (let i = 1; i <massive.length; i++){
         massive[i].parentElement.removeChild(massive[i]);
@@ -16,6 +33,32 @@ function startGame(event){
     let ot = document.getElementById("overlayText");
     ot.style.display = "none";
 }
+
+function flashAndFocus(input){
+    input.style.backgroundColor = "#fca2c1";
+    setTimeout(function()
+    {
+        input.style.backgroundColor = "white";
+        setTimeout(function()
+        {
+            input.style.backgroundColor = "#fca2c1";
+            setTimeout(function()
+            {
+                input.style.backgroundColor = "white";
+                setTimeout(function()
+                {
+                    input.style.backgroundColor = "#fca2c1";
+                    setTimeout(function()
+                    {
+                        input.style.backgroundColor = "white";
+                        input.focus();
+                    }, 150);
+                }, 150);
+            }, 150);
+        }, 150);
+    }, 150);
+}
+
 function initPositionDonor(resize = false){
     let pf = document.getElementById("play_field");
     let pf_height = pf.offsetHeight;
@@ -125,6 +168,11 @@ function stopGame(){
     gameStatus = false;
     let ot = document.getElementById("overlayText");
     ot.style.display = "block";
+    let un = document.getElementById("userName");
+    un.style.display = "block";
+
+    getScores();
+    sendScores();
 }
 
 function cropBlock(){
@@ -138,11 +186,139 @@ function cropBlock(){
         stopGame();
         return;
     }
+    let ratio = 0;
     if (current_left > init_left){
-        block.style.width = parseFloat(block.style.width)+(init_left-current_left);
+        let newWidth = parseFloat(block.style.width)+(init_left-current_left);
+        if (newWidth<1){
+            newWidth+=1;
+        }
+        block.style.width = newWidth;
+        ratio = (parseFloat(block.style.width)+(init_left-current_left))/init_width;
+
     }
     if (init_left > current_left){
-        block.style.width = parseFloat(block.style.width)-(init_left-current_left);
+        let newWidth = parseFloat(block.style.width)-(init_left-current_left);
+        if (newWidth<1){
+            newWidth+=1;
+        }
+        block.style.width = newWidth;
         block.style.left = parseFloat(block.style.left)+(init_left-current_left);
+        ratio = (parseFloat(block.style.width)-(init_left-current_left))/init_width;
+    }
+    if(ratio<0){
+        ratio = 1 + ratio;
+    }
+    console.log(ratio);
+    score+= Math.round(50*ratio*massive.length);
+    document.getElementById("currentScore").innerText = score;
+}
+
+function escape(text) {
+    if ( !text )
+        return text;
+    return text.toString()
+        .split("&").join("&amp;")
+        .split("<").join("&lt;")
+        .split(">").join("&gt;")
+        .split('"').join("&quot;")
+        .split("'").join("&#039;");
+}
+
+function getScores() {
+    $.ajax( {
+            url : ajaxHandlerScript,
+            type : 'POST', dataType:'json',
+            data : { f : 'READ', n : stringName },
+            cache : false,
+            success : showScores,
+            error : errorHandler
+        }
+    );
+}
+
+function showScores(data) {
+    if ( data.error!=undefined )
+        alert(data.error);
+    else {
+        if ( data.result!="" ) { 
+            leaderBoard=JSON.parse(data.result);
+            updateLeaderBoard();
+        }
     }
 }
+
+function updateLeaderBoard(){
+    document.getElementById("leaderboard").innerText = JSON.stringify(leaderBoard);
+}
+
+function sendScores() {
+    updatePassword=Math.random();
+    $.ajax( {
+            url : ajaxHandlerScript,
+            type : 'POST', dataType:'json',
+            data : { f : 'LOCKGET', n : stringName,
+                p : updatePassword },
+            cache : false,
+            success : lockGetReady,
+            error : errorHandler
+        }
+    );
+}
+
+// сообщения получены, добавляет, показывает, сохраняет
+function lockGetReady(data) {
+    if ( data.error!=undefined )
+        alert(data.error);
+    else {
+        if ( data.result!="" ) { 
+            leaderBoard=JSON.parse(data.result);
+        }
+
+        //push to a new array then slice
+        let new_scores = []
+        let new_count = leaderBoard.length < 3 ? leaderBoard.length + 1 : 3;
+        let push = true;
+        leaderBoard.forEach(element => {
+            alert(JSON.stringify(element))
+            if (score >= parseInt(element.score) && push){
+                new_scores.push({"name":username,"score":score.toString()});
+                push = !push;
+            }
+            new_scores.push(element);
+        });
+        if (push){
+            new_scores.push({"name":username,"score":score.toString()});
+        }
+        leaderBoard = new_scores.slice(0, new_count);
+        
+        $.ajax( {
+                url : ajaxHandlerScript,
+                type : 'POST', dataType:'json',
+                data : { f : 'UPDATE', n : stringName,
+                    v : JSON.stringify(leaderBoard), p : updatePassword },
+                cache : false,
+                success : updateReady,
+                error : errorHandler
+            }
+        );
+    }
+}
+
+function updateReady(data) {
+    if ( data.error!=undefined )
+        alert(data.error);
+    updateLeaderBoard();
+}
+
+function errorHandler(jqXHR,statusStr,errorStr) {
+    alert(statusStr+' '+errorStr);
+}
+
+// $.ajax( {
+//     url : ajaxHandlerScript,
+//     type : 'POST', dataType:'json',
+//     data : { f : 'INSERT', n : stringName,
+//         v : JSON.stringify(leaderBoard)},
+//     cache : false
+// }
+// );

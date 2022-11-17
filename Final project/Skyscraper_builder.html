@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://fe.it-academy.by/JQ/jquery.js"></script>
     <script src="draw.js"></script>
     <script>
         const mediaQuery = '(max-width: 750px)';
@@ -33,6 +34,7 @@
                 stopTick();
                 // addBlock();
             });
+            getScores();
         });
         window.addEventListener("resize",function(event){
             // alert("resize");
@@ -63,7 +65,6 @@
         }
         #play_field{
             height: 80vh;
-            background-image: url(images/cityFont.png);
         }
         @media screen and (orientation: portrait) and (max-width: 750px){
             #main_field {
@@ -75,28 +76,60 @@
             }
         }
         body {
-            background-image: url(images/background2.jpg);
+            background-image: url(images/background.jpg);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         
     </style>
 </head>
 <body>
-    <div id="main_field" style="background-color:rgba(0, 128, 0, 0.484);">
-        <div id="menu" style="background-color:rgba(0, 92, 128, 0.644);"></div>
-        <div id="play_field" style="background-color:rgba(98, 0, 128, 0.588);">
-            <div id = "overlayText" style="position:absolute; background-color: rgba(137, 43, 226, 0.675); z-index: 100;">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Nam dicta, error at ut ea, magnam accusamus voluptates 
-                    sapiente repudiandae est hic porro tempore quae in nihil, 
-                    maiores a ducimus sed.
-                </p>
-                <input type="button" value="Start" onclick="startGame(event, false)">
+    <div id="main_field" style="background: linear-gradient(#eacdab, #fffefe);">
+        <div id="menu" style="background: radial-gradient(#bdbdbd, #888888); display: flex; align-items: flex-start;">
+            <div style="width: 50%">
+                <div>
+                    <p style="text-align: center">Current record</p>
+                </div>
+                <div>
+                    <p style="text-align: center">---</p>
+                </div>
+            </div>
+            <div style="width: 50%">
+                <div>
+                    <p style="text-align: center">Your score</p>
+                </div>
+                <div>
+                    <p id="currentScore" style="text-align: center">0</p>
+                </div>
+            </div>
+        </div>
+        <div id="play_field">
+            <div id = "overlayText" style="position:absolute; background-color:#f9f7f6c5; z-index: 100; width: 400px; height: 571px;">
+                <div>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Nam dicta, error at ut ea, magnam accusamus voluptates 
+                        sapiente repudiandae est hic porro tempore quae in nihil, 
+                        maiores a ducimus sed.
+                    </p>
+                </div>
+                <div>
+                    <p id="leaderboard">Leader bord</p>
+                </div>
+                <div id="userName" style="display:block">
+                    <p>To start type your name</p>
+                    <input type="text" id = "playerName" >
+                </div>
+                <div>
+                    <input type="button" value="Start" onclick="startGame(event, false)">
+                </div>               
             </div>
             <svg id ="donor" style="position:relative; display:none;" xmlns="http://www.w3.org/2000/svg">
                 <g>
                  <title>Layer 1</title>
-                 <rect id="donorRect" stroke="#000" style="stroke-width: 0;" id="svg_1" height="25" width="30%" y="0" x="0" fill="#FFFF91"/>
+                 <rect id="donorRect" stroke="#000" style="stroke-width: 0;" id="svg_1" height="25" width="30%" y="0" x="0" fill="#888888"/>
                 </g>
             </svg>
         </div>
