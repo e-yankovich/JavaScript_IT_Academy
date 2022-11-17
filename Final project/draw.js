@@ -16,6 +16,8 @@ username = "username";
 
 
 function startGame(event){
+    score = 0;
+    document.getElementById("currentScore").innerText = "0";
     input = document.getElementById("playerName");
     let inputedPlayerName = input.value;
     if (inputedPlayerName.trim()== ""){
