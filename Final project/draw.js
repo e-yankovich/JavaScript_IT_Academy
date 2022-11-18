@@ -1,22 +1,128 @@
-const ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
-const stringName="YANKOVICH_BLOCKSBUILDER_SCORE";
 
-massive = [];
-widthProportion = 0;
-heightProportion = 0;
-colors = ["#888888", "#c6c6c6", "#eacdab"];
-blockV = 2.5;
-animationStatus = false;
-gameStatus = true;
-score = 0;
-leaderBoard = [{"name":"test","score":"250"}, {"name":"test","score":"125"}];
-username = "username";
+class Block {
 
+    id;
+    element;
+    top;
+    left;
+    width;
+    height;
 
+    update(){
+        this.element.id = this.id;
+        this.elemen.style.top = this.top;
+        this.element.style.left = this.left;
+        this.element.style.width = this.width;
+        this.elemen.style.height = this.height;
+    }
+}
 
+class Game{
+
+    blocks = [];
+    leaderBoard = [];
+    #widthProportion = 0;
+    #heightProportion = 0;
+    #colors = ["#888888", "#c6c6c6", "#eacdab"];
+    #blockVelocity = 2.5;
+    #animationStatus = false;
+    #gameStatus = true;
+    #score = 0;
+    #username = "";
+    #ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+    #containerName="YANKOVICH_BLOCKSBUILDER_SCORE";
+
+    get_widthProportion(){
+        return this.#widthProportion;
+    }
+
+    set_widthProportion(widthProportion){
+        this.#widthProportion = widthProportion;
+    }
+
+    get_heightProportion(){
+        return this.#heightProportion;
+    }
+
+    set_heightProportion(heightProportion){
+        this.#heightProportion = heightProportion;
+    }
+
+    get_colors(){
+        return this.#colors;
+    }
+
+    get_blockVelocity(){
+        return this.#blockVelocity;
+    }
+
+    reverse_blockVelocity(){
+        this.#blockVelocity = -this.#blockVelocity;
+    }
+
+    get_animationStatus(){
+        return this.#animationStatus;
+    }
+
+    set_animationStatus(animationStatus){
+        this.#animationStatus = animationStatus;
+    }
+
+    get_gameStatus(){
+        return this.#gameStatus;
+    }
+
+    set_gameStatus(gameStatus){
+        this.#gameStatus = gameStatus;
+    }
+
+    get_score(){
+        return this.#score;
+    }
+
+    set_score(score=0){
+        this.#score = score;
+    }
+
+    update_score(ratio){
+        this.#score += Math.round(50*ratio*this.blocks.length)
+    }
+
+    get_username(){
+        return this.#username;
+    }
+
+    set_username(username){
+        this.#username = username;
+    }
+
+    get_ajaxHandlerScript(){
+        return this.#ajaxHandlerScript;
+    }
+
+    get_containerName(){
+        return this.#containerName;
+    }
+
+}
+
+class MrkpHlpr {
+
+    toggle_element(element, hide = true){
+        if (hide){
+            element.style.display = "none";
+        }
+        else {
+            element.style.display = "block";
+        }
+    }
+}
+
+let game = new Game();
+let helper = new MrkpHlpr()
 
 function startGame(event){
-    score = 0;
+    game.set_score()
     document.getElementById("currentScore").innerText = "0";
     input = document.getElementById("playerName");
     let inputedPlayerName = input.value;
@@ -24,16 +130,16 @@ function startGame(event){
         flashAndFocus(input);
         return;
     }
-    username = escape(input.value.trim());
+    game.set_username(escape(input.value.trim()));
     event.stopPropagation();
-    for (let i = 1; i <massive.length; i++){
-        massive[i].parentElement.removeChild(massive[i]);
+    for (let i = 1; i <game.blocks.length; i++){
+        game.blocks[i].parentElement.removeChild(game.blocks[i]);
     }
-    massive = massive.slice(0,1);
-    gameStatus = true;
+    game.blocks = game.blocks.slice(0,1);
+    game.set_gameStatus(true);
     addBlock();
     let ot = document.getElementById("overlayText");
-    ot.style.display = "none";
+    helper.toggle_element(ot);
 }
 
 function flashAndFocus(input){
@@ -72,8 +178,8 @@ function initPositionDonor(resize = false){
     let rectHeight = Math.round(pf_height*0.04);
     let rectWidth = Math.round(pf_width*0.3);
     if (resize){
-        widthProportion = parseFloat(rect.style.width)/rectWidth;
-        heightProportion = parseFloat(rect.style.height)/rectHeight; 
+        game.set_widthProportion(parseFloat(rect.style.width)/rectWidth);
+        game.set_heightProportion(parseFloat(rect.style.height)/rectHeight); 
     }
     rect.style.width = rectWidth;
     rect.style.height = rectHeight;
@@ -81,7 +187,7 @@ function initPositionDonor(resize = false){
     let rect_y = pf_height - rectHeight;
     let svg = document.getElementById("donor");
     if (!resize){
-        massive.push(svg);
+        game.blocks.push(svg);
     }
     svg.style.top = rect_y;
     svg.style.left = rect_x; 
@@ -91,18 +197,18 @@ function initPositionDonor(resize = false){
 }
 
 function addBlock(){
-    let donor = massive.at(-1); 
+    let donor = game.blocks.at(-1); 
     newBlock = donor.cloneNode(true);
-    newBlock.id = "block" + massive.length;
+    newBlock.id = "block" + game.blocks.length;
     let rect = newBlock.getElementsByTagName("rect")[0];
-    rect.id = "rect" + massive.length;
-    rect.setAttribute("fill", colors[massive.length%colors.length])
-    massive.push(newBlock);
+    rect.id = "rect" + game.blocks.length;
+    rect.setAttribute("fill", game.get_colors()[game.blocks.length%game.get_colors().length])
+    game.blocks.push(newBlock);
     donor.parentElement.appendChild(newBlock);
     newBlock.style.top = parseFloat(newBlock.style.top) - 2*parseFloat(newBlock.style.height);
     //newBlock.style.left = parseFloat(newBlock.style.left) + 20;
     newBlock.style.left = 0;
-    animationStatus = true;
+    game.set_animationStatus(true);
     requestAnimationFrame(tick);
 }
 
@@ -110,66 +216,62 @@ function adaptBlocks(){
     let pf = document.getElementById("play_field");
     let pf_height = pf.offsetHeight;
     let pf_width = pf.offsetWidth;
-    for (let i = 1; i <massive.length; i++){
-        massive[i].style.width = parseFloat(massive[i].style.width)/widthProportion;
-        massive[i].style.height = parseFloat(massive[i].style.height)/heightProportion;
-        let rectaingle = massive[i].getElementById("rect" + i);
-        rectaingle.style.width = parseFloat(massive[i].style.width)/widthProportion;
-        rectaingle.style.height = parseFloat(massive[i].style.height)/heightProportion;
-        massive[i].style.top = parseFloat(massive[i-1].style.top)-2*parseFloat(massive[i].style.height);
-        //massive[i].style.top = parseFloat(massive[i].style.top)/heightProportion;
-        massive[i].style.left = parseFloat(massive[i].style.left)/widthProportion;
+    for (let i = 1; i <game.blocks.length; i++){
+        game.blocks[i].style.width = parseFloat(game.blocks[i].style.width)/game.get_widthProportion();
+        game.blocks[i].style.height = parseFloat(game.blocks[i].style.height)/game.get_heightProportion();
+        let rectaingle = game.blocks[i].getElementById("rect" + i);
+        rectaingle.style.width = parseFloat(game.blocks[i].style.width)/game.get_widthProportion();
+        rectaingle.style.height = parseFloat(game.blocks[i].style.height)/game.get_heightProportion();
+        game.blocks[i].style.top = parseFloat(game.blocks[i-1].style.top)-2*parseFloat(game.blocks[i].style.height);
+        //game.blocks[i].style.top = parseFloat(game.blocks[i].style.top)/game.get_heightProportion();
+        game.blocks[i].style.left = parseFloat(game.blocks[i].style.left)/game.get_widthProportion();
     }
 }
 
 function tick() {
-    if (!animationStatus){
+    if (!game.get_animationStatus()){
         cropBlock();
-        if (gameStatus){
+        if (game.get_gameStatus()){
             addBlock();
         }
         return;
     }
     let pf = document.getElementById("play_field");
     let pfWidth = pf.offsetWidth;
-    let activeBlock = massive.at(-1);
+    let activeBlock = game.blocks.at(-1);
     let activeBlockWidth = parseFloat(activeBlock.style.width);
     let activeBlocLeft = parseFloat(activeBlock.style.left);
 
-    // вылетел ли мяч правее стены?
-    if ((activeBlocLeft + blockV + activeBlockWidth)>=pfWidth){
-        blockV = -blockV;
+    if ((activeBlocLeft + game.get_blockVelocity() + activeBlockWidth)>=pfWidth){
+        game.reverse_blockVelocity();
         activeBlock.style.left = (pfWidth - activeBlockWidth)+"px";
     }
 
-    // activeBlock.posX+=activeBlock.speedX;
-    
-    // вылетел ли мяч левее стены?
-    if ((activeBlocLeft + blockV)<0){
-        blockV = -blockV;
+    if ((activeBlocLeft + game.get_blockVelocity())<0){
+        game.reverse_blockVelocity();
         activeBlock.style.left = "0px";
     }
     
-    activeBlock.style.left = activeBlocLeft+blockV;
-    if (animationStatus){
+    activeBlock.style.left = activeBlocLeft+game.get_blockVelocity();
+    if (game.get_animationStatus()){
         requestAnimationFrame(tick);
     }
     else{
         cropBlock();
-        if (gameStatus){
+        if (game.get_gameStatus()){
             addBlock();
         }
     } 
 }
 
 function stopTick(){
-    animationStatus = false;
+    game.set_animationStatus(false);
 }
 
 function stopGame(){
-    gameStatus = false;
+    game.set_gameStatus(false);
     let ot = document.getElementById("overlayText");
-    ot.style.display = "block";
+    helper.toggle_element(ot, false)
     let un = document.getElementById("userName");
     un.style.display = "block";
 
@@ -178,9 +280,9 @@ function stopGame(){
 }
 
 function cropBlock(){
-    let init_left = parseFloat(massive.at(-2).style.left);
-    let init_width = parseFloat(massive.at(-2).style.width);
-    let block = massive.at(-1);
+    let init_left = parseFloat(game.blocks.at(-2).style.left);
+    let init_width = parseFloat(game.blocks.at(-2).style.width);
+    let block = game.blocks.at(-1);
     let current_left = parseFloat(block.style.left);
     let current_width = parseFloat(block.style.width);
     if (current_left+current_width <= init_left || current_left>= init_left+init_width){
@@ -211,8 +313,8 @@ function cropBlock(){
         ratio = 1 + ratio;
     }
     console.log(ratio);
-    score+= Math.round(50*ratio*massive.length);
-    document.getElementById("currentScore").innerText = score;
+    game.update_score(ratio);
+    document.getElementById("currentScore").innerText = game.get_score();
 }
 
 function escape(text) {
@@ -228,9 +330,9 @@ function escape(text) {
 
 function getScores() {
     $.ajax( {
-            url : ajaxHandlerScript,
+            url : game.get_ajaxHandlerScript(),
             type : 'POST', dataType:'json',
-            data : { f : 'READ', n : stringName },
+            data : { f : 'READ', n : game.get_containerName() },
             cache : false,
             success : showScores,
             error : errorHandler
@@ -256,9 +358,9 @@ function updateLeaderBoard(){
 function sendScores() {
     updatePassword=Math.random();
     $.ajax( {
-            url : ajaxHandlerScript,
+            url : game.get_ajaxHandlerScript(),
             type : 'POST', dataType:'json',
-            data : { f : 'LOCKGET', n : stringName,
+            data : { f : 'LOCKGET', n : game.get_containerName(),
                 p : updatePassword },
             cache : false,
             success : lockGetReady,
@@ -282,21 +384,21 @@ function lockGetReady(data) {
         let push = true;
         leaderBoard.forEach(element => {
             alert(JSON.stringify(element))
-            if (score >= parseInt(element.score) && push){
-                new_scores.push({"name":username,"score":score.toString()});
+            if (game.get_score() >= parseInt(element.score) && push){
+                new_scores.push({"name":game.get_username(),"score":game.get_score().toString()});
                 push = !push;
             }
             new_scores.push(element);
         });
         if (push){
-            new_scores.push({"name":username,"score":score.toString()});
+            new_scores.push({"name":game.get_username(),"score":game.get_score().toString()});
         }
         leaderBoard = new_scores.slice(0, new_count);
         
         $.ajax( {
-                url : ajaxHandlerScript,
+                url : game.get_ajaxHandlerScript(),
                 type : 'POST', dataType:'json',
-                data : { f : 'UPDATE', n : stringName,
+                data : { f : 'UPDATE', n : game.get_containerName(),
                     v : JSON.stringify(leaderBoard), p : updatePassword },
                 cache : false,
                 success : updateReady,
@@ -315,12 +417,3 @@ function updateReady(data) {
 function errorHandler(jqXHR,statusStr,errorStr) {
     alert(statusStr+' '+errorStr);
 }
-
-// $.ajax( {
-//     url : ajaxHandlerScript,
-//     type : 'POST', dataType:'json',
-//     data : { f : 'INSERT', n : stringName,
-//         v : JSON.stringify(leaderBoard)},
-//     cache : false
-// }
-// );
