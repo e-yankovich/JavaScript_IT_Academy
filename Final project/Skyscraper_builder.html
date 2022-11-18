@@ -35,7 +35,8 @@
                 stopTick();
             });
             
-            document.getElementById("play_field").addEventListener("touchend", function(event){
+            document.getElementById("play_field").addEventListener("touchstart", function(event){
+                event.preventDefault();
                 console.log("ТАЧ");
                 stopTick();
             });
