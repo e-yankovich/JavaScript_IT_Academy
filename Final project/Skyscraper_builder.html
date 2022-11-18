@@ -28,13 +28,25 @@
             adaptBlocks();
         });
         document.addEventListener("DOMContentLoaded", function(event){ 
-            // alert("loaded");
             initPositionDonor();
-            document.getElementById("play_field").addEventListener("click", function(event){
-                stopTick();
-                // addBlock();
-            });
             getScores();
+            document.getElementById("play_field").addEventListener("click", function(event){
+                console.log("КЛИК");
+                stopTick();
+            });
+            
+            document.getElementById("play_field").addEventListener("touchstart", function(event){
+                console.log("ТАЧ");
+                stopTick();
+            });
+
+            window.addEventListener("keypress", function(event){
+                event = event || window.event;
+                if (event.key == " " || event.code == "Space" || event.keyCode == 32) {
+                    event.preventDefault();
+                    stopTick();
+                }
+            });
 
             var input = document.getElementById("playerName");
             input.addEventListener("keypress", function(event) {
