@@ -14,13 +14,12 @@ body{
     margin: auto;
 }
 #scores_field{
-    height: 10vh;
     background: radial-gradient(#bdbdbd, #888888);
     display: flex;
     align-items: flex-start;
 }
 #play_field{
-    height: 80vh;
+    height: 70vh;
     background: linear-gradient(#eacdab, #fffefe);
 }
 #overlay_text{
@@ -46,6 +45,7 @@ body{
     margin: 0;
     font-size: 27px;
     font-family: 'Roboto Flex', sans-serif;
+    padding-bottom: 1vh;
 }
 #current_record{
     color: black;
@@ -54,13 +54,17 @@ body{
     color: white;
 }
 .height_1{
-    height: 27% ;
+    /* height: 27% ; */
+    margin-bottom: 5vh;
+    margin-top: 2vh;
 }
 .height_2{
-    height: 38% ;
+    /* height: 38% ; */
+    margin-bottom: 7vh;
 }
 .height_3{
-    height: 15% ;
+    /* height: 15% ; */
+    margin-bottom: 4vh;
 }
 .text, #leaderboard1, #leaderboard2, #leaderboard3{
     text-align: center;
