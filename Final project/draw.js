@@ -236,11 +236,11 @@ function startGame(event){
         return;
     }
     if (inputedPlayerName.length > 15){
-        document.getElementById("warning").style.display = "block";
+        helper.toggle_element(document.getElementById("warning"), false);
         helper.flashAndFocus(input, ['#fca2c1', 'white']);
         return;
     }
-    document.getElementById("warning").style.display = "none";
+    helper.toggle_element(document.getElementById("warning"));
     game.set_username(escape(input.value.trim()));
     event.stopPropagation();
     for (let i = 1; i <game.blocks.length; i++){
@@ -346,11 +346,11 @@ function stopTick(){
 function stopGame(){
     game.set_gameStatus(false);
     let ot = document.getElementById("overlayText");
-    helper.toggle_element(ot, false)
+    helper.toggle_element(ot, false);
     let un = document.getElementById("userName");
-    un.style.display = "block";
+    helper.toggle_element(un, false)
     let go = document.getElementById("gameOver");
-    go.style.display = "block";
+    helper.toggle_element(go, false)
     getScores();
     sendScores();
 }

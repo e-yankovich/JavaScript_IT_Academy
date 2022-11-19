@@ -30,17 +30,17 @@
         document.addEventListener("DOMContentLoaded", function(event){ 
             initPositionDonor();
             getScores();
+
             document.getElementById("play_field").addEventListener("click", function(event){
-                console.log("КЛИК");
-                stopTick();
-            });
-            
-            document.getElementById("play_field").addEventListener("touchstart", function(event){
-                event.preventDefault();
-                console.log("ТАЧ");
                 stopTick();
             });
 
+            document.getElementById("play_field").addEventListener("touchstart", function(event){
+                event.preventDefault();
+                stopTick();
+                navigator.vibrate(200);
+            });
+            
             window.addEventListener("keypress", function(event){
                 event = event || window.event;
                 if (event.key == " " || event.code == "Space" || event.keyCode == 32) {
@@ -121,7 +121,7 @@
     </style>
 </head>
 <body>
-    <div id="main_field" style="background: linear-gradient(#eacdab, #fffefe);">
+    <div id="main_field">
         <div id="menu" style="background: radial-gradient(#bdbdbd, #888888); display: flex; align-items: flex-start;">
             <div style="width: 50%">
                 <div>
@@ -140,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div id="play_field">
+        <div id="play_field"  style="background: linear-gradient(#eacdab, #fffefe);">
             <div id = "overlayText" style="position:absolute; background-color:#f9f7f6c5; z-index: 100; width: 400px; height: 571px;">
                 <div style="height: 25% ;">
                     <div>
