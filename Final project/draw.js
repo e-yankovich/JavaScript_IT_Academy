@@ -226,6 +226,7 @@ let helper = new MrkpHlpr()
 function startGame(event){
 
     event = event || window.event;
+    event.stopPropagation();
 
     game.set_score()
     document.getElementById("currentScore").innerText = "0";
@@ -242,7 +243,7 @@ function startGame(event){
     }
     helper.toggle_element(document.getElementById("warning"));
     game.set_username(escape(input.value.trim()));
-    event.stopPropagation();
+    
     for (let i = 1; i <game.blocks.length; i++){
         game.blocks[i].element.parentElement.removeChild(game.blocks[i].element);
     }
@@ -345,12 +346,9 @@ function stopTick(){
 
 function stopGame(){
     game.set_gameStatus(false);
-    let ot = document.getElementById("overlayText");
-    helper.toggle_element(ot, false);
-    let un = document.getElementById("userName");
-    helper.toggle_element(un, false)
-    let go = document.getElementById("gameOver");
-    helper.toggle_element(go, false)
+    helper.toggle_element(document.getElementById("overlayText"), false);
+    helper.toggle_element(document.getElementById("userName"), false)
+    helper.toggle_element(document.getElementById("gameOver"), false)
     getScores();
     sendScores();
 }
@@ -410,7 +408,6 @@ function showScores(data) {
 }
 
 function updateLeaderBoard(){
-    //document.getElementById("leaderboard").innerText = JSON.stringify(game.leaderBoard);
     for (let i=1; i<=3; i++){
         if (game.leaderBoard.length >= i && game.leaderBoard[i-1].score>0){
             document.getElementById("leaderboard" + i).innerText = game.leaderBoard[i-1].name + ": " + game.leaderBoard[i-1].score;

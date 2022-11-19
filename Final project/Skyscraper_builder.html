@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style></style>
     <script src="https://fe.it-academy.by/JQ/jquery.js"></script>
     <script src="draw.js"></script>
     <!-- <script src="oop_based_draw.js"></script> -->
@@ -23,10 +24,9 @@
             // }
         });
 
-        document.addEventListener("devicechange", function(event){ 
-            initPositionDonor(true);
-            adaptBlocks();
-        });
+    
+
+
         document.addEventListener("DOMContentLoaded", function(event){ 
             initPositionDonor();
             getScores();
@@ -51,6 +51,17 @@
                     document.getElementById("button").click();
                 }
             });
+
+            document.addEventListener("devicechange", function(event){ 
+                initPositionDonor(true);
+                adaptBlocks();
+            });
+
+            screen.addEventListener("orientationchanged", function(event){ 
+                initPositionDonor(true);
+                adaptBlocks();
+            });
+
         });
         window.addEventListener("resize",function(event){
             // alert("resize");
