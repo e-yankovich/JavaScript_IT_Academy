@@ -33,14 +33,9 @@
 
             document.getElementById("play_field").addEventListener("click", function(event){
                 stopTick();
-            });
-
-            document.getElementById("play_field").addEventListener("touchstart", function(event){
-                event.preventDefault();
-                stopTick();
                 navigator.vibrate(200);
             });
-            
+
             window.addEventListener("keypress", function(event){
                 event = event || window.event;
                 if (event.key == " " || event.code == "Space" || event.keyCode == 32) {
