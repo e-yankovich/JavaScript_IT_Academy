@@ -391,7 +391,6 @@ function cropBlock(){ //Обрезка установленного блока.
     if(ratio<0){
         ratio = 1 + ratio;
     }
-    console.log(ratio);
     game.update_score(ratio); //Начисление очков порпорционально ширине установленного блока.
     document.getElementById("current_score").innerText = game.get_score();
 }
