@@ -54,16 +54,13 @@ body{
     color: white;
 }
 .height_1{
-    /* height: 27% ; */
-    margin-bottom: 5vh;
+    margin-bottom: 4vh;
     margin-top: 2vh;
 }
 .height_2{
-    /* height: 38% ; */
-    margin-bottom: 7vh;
+    margin-bottom: 2vh;
 }
 .height_3{
-    /* height: 15% ; */
     margin-bottom: 4vh;
 }
 .text, #leaderboard1, #leaderboard2, #leaderboard3{
@@ -93,6 +90,7 @@ body{
     background-color: #f9f7f6c5;
     border-radius: 3px;
     font-family: 'Roboto Flex', sans-serif;
+    width: 60%;
 }
 #warning{
     text-align: center;

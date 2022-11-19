@@ -11,30 +11,29 @@
     <script>
         const mediaQuery = '(max-width: 750px)';
         const mediaQueryList = window.matchMedia(mediaQuery);
-
+        
+        //Реакция на mediaQuery. Размеры блоков адаптируются под новый размер страницы.
         mediaQueryList.addEventListener('change', event => {
             console.log(window.innerWidth);
             if (event.matches) {
-                // console.log('The window is now 750px or under');
                 initPositionDonor(true);
                 adaptBlocks();
-            }// else {
-            //     console.log('The window is now over 750px');
-            // }
+            }    
         });
 
-    
+        document.addEventListener("DOMContentLoaded", function(event){
+            initPositionDonor(); //Устанавливается первый блок.
+            getScores(); //Получение и отображение таблицы рекордов
 
-
-        document.addEventListener("DOMContentLoaded", function(event){ 
-            initPositionDonor();
-            getScores();
-
+            //Реакция на клик по игровому полю. Движущийся блок останавливается и обрезается.
+            //Если блоки дошли до верха игровой зоны, игра заканчивается.
+            //Для данной игры реакция на клик и на тач должна быть одинаковой, поэтому события тач не перехватываются дополнительно.
             document.getElementById("play_field").addEventListener("click", function(event){
                 stopTick();
-                navigator.vibrate(200);
+                navigator.vibrate(200); //Вибрация для поддерживающих ее устройств, на остальных устройствах ничего не произойдет.
             });
 
+            //Реакция на нажатие пробела. Обрабатывается аналогично предыдущему, но без вибро отклика.
             window.addEventListener("keypress", function(event){
                 event = event || window.event;
                 if (event.key == " " || event.code == "Space" || event.keyCode == 32) {
@@ -43,6 +42,7 @@
                 }
             });
 
+            //Реакция на нажатие Enter для инпута. Перевод на реакцию нажатия на кнопку старт.
             var input = document.getElementById("playerName");
             input.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
@@ -51,43 +51,29 @@
                 }
             });
 
-            document.addEventListener("devicechange", function(event){ 
-                initPositionDonor(true);
-                adaptBlocks();
-            });
-
+            //Реакция на изменение ориентации. Происходит адаптация размеров блоков.
             screen.addEventListener("orientationchanged", function(event){ 
                 initPositionDonor(true);
                 adaptBlocks();
             });
-
         });
+
+        //Реакция на изменение размера страницы. Происходит адаптация размеров блоков.
         window.addEventListener("resize",function(event){
-            // alert("resize");
             play_field = document.getElementById("play_field");
-            // alert(play_field.offsetHeight);
-            // alert(play_field.offsetWidth);
             initPositionDonor(true);
             adaptBlocks();
         });
 
-        //there is no support for a custom message anymore
+        //Реакция на обновление страницы. Каждый браузер отображает свое сообщение.
+        //Кнопки вперед и назад не работают, т.к. игра одностраничная.
         window.onbeforeunload = function (e) {
             var e = e || window.event;
             if (e) {
                 e.returnValue = 'Leaving the page';
             }
-
-            // For Safari
             return 'Leaving the page';;
         };
-        
-
-
-
-        // window.addEventListener("MediaQueryList",function(event){
-        //     alert("media");
-        // });
     </script>
 </head>
 <body>
@@ -95,18 +81,18 @@
         <div id="scores_field">
             <div class="scores_blocks">
                 <div>
-                    <p class="scores_rules_caption">Current record</p>
+                    <p class="scores_rules_caption big_text">Current record</p>
                 </div>
                 <div>
-                    <p id="current_record" class="scores_numbers">---</p>
+                    <p id="current_record" class="scores_numbers big_text">---</p>
                 </div>
             </div>
             <div class="scores_blocks">
                 <div>
-                    <p class="scores_rules_caption">Your score</p>
+                    <p class="scores_rules_caption big_text">Your score</p>
                 </div>
                 <div>
-                    <p id="current_score" class="scores_numbers">0</p>
+                    <p id="current_score" class="scores_numbers big_text">0</p>
                 </div>
             </div>
         </div>
@@ -114,41 +100,36 @@
             <div id = "overlay_text">
                 <div class="height_1">
                     <div>
-                        <p class="scores_rules_caption">
+                        <p class="scores_rules_caption big_text">
                             Rules
                         </p>
                     </div>
                     <div>
-                        <!-- <p class="text">
-                            Click in any place of the play field, press space button or touch the screen to stop a brick. 
-                            A part of the brick is sliced each time you stop it not exactely over the previous brick. 
-                            Try to build as thick and high construction as possible.
-                        </p> -->
-                        <p class="text">
-                           Click or touch to place a brick. Build your tower and gain max score.
+                        <p class="text small_text">
+                           Click or touch a play field to place a brick. Build your tower and gain max score.
                         </p>
                     </div>
                 </div>
                 <div class="height_2">
                     <div id="game_over">
-                        <p id="game_over_message">Game over</p>
+                        <p id="game_over_message" class="big_text">Game over</p>
                     </div>
                     <div>
-                        <p class="scores_rules_caption">Top 3 scores</p>
+                        <p class="scores_rules_caption big_text">Top 3 scores</p>
                     </div>
                     <div>
-                        <p id="leaderboard1"></p>
-                        <p id="leaderboard2"></p>
-                        <p id="leaderboard3"></p>
+                        <p id="leaderboard1" class="small_text"></p>
+                        <p id="leaderboard2" class="small_text"></p>
+                        <p id="leaderboard3" class="small_text"></p>
                     </div>
                 </div>
                 <div id="user_name" class="height_3">
-                    <p class="scores_rules_caption">To start type your name:</p>
-                    <input type="text" id = "playerName">
-                    <p id="warning">Name can not be more than 10 characters</p>
+                    <p class="scores_rules_caption small_text">To start type your name:</p>
+                    <input type="text" id="playerName">
+                    <p id="warning" class="small_text">Name can not be more than 10 characters</p>
                 </div>
                 <div class="button_container">
-                        <input id="button" type="button" value="Start new game" onclick="startGame(event, false)">
+                        <input id="button" class="small_text" type="button" value="Start new game" onclick="startGame(event, false)">
                 </div>               
             </div>
             <svg id ="donor" xmlns="http://www.w3.org/2000/svg">
