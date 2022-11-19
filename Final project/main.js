@@ -229,7 +229,7 @@ function startGame(event){
     event.stopPropagation();
 
     game.set_score()
-    document.getElementById("currentScore").innerText = "0";
+    document.getElementById("current_score").innerText = "0";
     input = document.getElementById("playerName");
     let inputedPlayerName = input.value;
     if (inputedPlayerName.trim()== ""){
@@ -250,7 +250,7 @@ function startGame(event){
     game.blocks = game.blocks.slice(0,1);
     game.set_gameStatus(true);
     addBlock();
-    let ot = document.getElementById("overlayText");
+    let ot = document.getElementById("overlay_text");
     helper.toggle_element(ot);
 }
 
@@ -258,10 +258,10 @@ function initPositionDonor(resize = false){
     let pf = document.getElementById("play_field");
     let pf_height = pf.offsetHeight;
     let pf_width = pf.offsetWidth;
-    let ot = document.getElementById("overlayText");
+    let ot = document.getElementById("overlay_text");
     ot.style.height = pf_height+"px";
     ot.style.width = pf_width+"px";
-    let rect = document.getElementById("donorRect");
+    let rect = document.getElementById("donor_rect");
     let rectHeight = Math.round(pf_height*0.04);
     let rectWidth = Math.round(pf_width*0.3);
     if (resize){
@@ -346,9 +346,9 @@ function stopTick(){
 
 function stopGame(){
     game.set_gameStatus(false);
-    helper.toggle_element(document.getElementById("overlayText"), false);
-    helper.toggle_element(document.getElementById("userName"), false)
-    helper.toggle_element(document.getElementById("gameOver"), false)
+    helper.toggle_element(document.getElementById("overlay_text"), false);
+    helper.toggle_element(document.getElementById("user_name"), false)
+    helper.toggle_element(document.getElementById("game_over"), false)
     getScores();
     sendScores();
 }
@@ -370,7 +370,7 @@ function cropBlock(){
     }
     console.log(ratio);
     game.update_score(ratio);
-    document.getElementById("currentScore").innerText = game.get_score();
+    document.getElementById("current_score").innerText = game.get_score();
 }
 
 function escape(text) {
@@ -416,7 +416,7 @@ function updateLeaderBoard(){
             document.getElementById("leaderboard" + i).innerText = "---"
         }
     }
-    document.getElementById("currentRecord").innerText = game.leaderBoard.length >= 0 ? game.leaderBoard[0].score : "---";
+    document.getElementById("current_record").innerText = game.leaderBoard.length >= 0 ? game.leaderBoard[0].score : "---";
 }
 
 function sendScores() {

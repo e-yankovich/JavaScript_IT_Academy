@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@200&display=swap');
+body{
+    background-image: url(images/background.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+#main_field {
+    width: 50vw;
+    height: 90vh;
+    max-height: 800px;
+    max-width: 400px;
+    margin: auto;
+}
+#scores_field{
+    height: 10vh;
+    background: radial-gradient(#bdbdbd, #888888);
+    display: flex;
+    align-items: flex-start;
+}
+#play_field{
+    height: 80vh;
+    background: linear-gradient(#eacdab, #fffefe);
+}
+#overlay_text{
+    position:absolute;
+    background-color:#f9f7f6c5;
+    z-index: 100;
+    width: 400px;
+    height: 571px;
+}
+.scores_blocks{
+    width: 50%;
+}
+.scores_rules_caption{
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    font-size: 24px;
+    color: black;
+    font-family: 'Roboto Flex', sans-serif;
+}
+.scores_numbers{
+    text-align: center;
+    margin: 0;
+    font-size: 27px;
+    font-family: 'Roboto Flex', sans-serif;
+}
+#current_record{
+    color: black;
+}
+#current_score{
+    color: white;
+}
+.height_1{
+    height: 27% ;
+}
+.height_2{
+    height: 38% ;
+}
+.height_3{
+    height: 15% ;
+}
+.text, #leaderboard1, #leaderboard2, #leaderboard3{
+    text-align: center;
+    margin: 2px;
+    padding: 5px;
+    font-size: 16px;
+    color: black;
+    font-family: 'Roboto Flex', sans-serif;
+}
+#game_over{
+    display: none;
+}
+#game_over_message{
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    font-size: 40px;
+    color: #fca2c1;
+    font-family: 'Roboto Flex', sans-serif;
+}
+#user_name{
+    display:block;
+    text-align: center;
+}
+#playerName{
+    background-color: #f9f7f6c5;
+    border-radius: 3px"
+    font-family: 'Roboto Flex', sans-serif;
+}
+#warning{
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    font-size: 15px;
+    color: #fca2c1;
+    font-family: 'Roboto Flex', sans-serif;
+    display: none;
+}
+.button_container{
+    text-align: center;
+}
+#button{
+    background-color: #f9f7f6c5;
+    height: 60px;
+    width: 50%;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    font-family: 'Roboto Flex', sans-serif;
+}
+#button:hover{
+background-color: #fca2c1 !important;
+}
+#donor{
+    position:relative;
+    display:none;
+}
+@media screen and (orientation: portrait) and (max-width: 750px){
+    #main_field {
+        width: 90vw;
+        height: 90vh;
+        max-height: 800px;
+        max-width: 400px;
+        margin: auto;
+    }
+}

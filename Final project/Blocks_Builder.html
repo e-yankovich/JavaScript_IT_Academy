@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style></style>
+    <link rel="stylesheet" href="style.css">
     <script src="https://fe.it-academy.by/JQ/jquery.js"></script>
-    <script src="draw.js"></script>
-    <!-- <script src="oop_based_draw.js"></script> -->
+    <script src="main.js"></script>
     <script>
         const mediaQuery = '(max-width: 750px)';
         const mediaQueryList = window.matchMedia(mediaQuery);
@@ -90,104 +89,69 @@
         //     alert("media");
         // });
     </script>
-    <style>
-        #main_field {
-                width: 50vw;
-                height: 90vh;
-                max-height: 800px;
-                max-width: 400px;
-                margin: auto;
-            }
-        #menu{
-            height: 10vh;
-        }
-        #play_field{
-            height: 80vh;
-        }
-        @media screen and (orientation: portrait) and (max-width: 750px){
-            #main_field {
-                width: 90vw;
-                height: 90vh;
-                max-height: 800px;
-                max-width: 400px;
-                margin: auto;
-            }
-        }
-        body{
-            background-image: url(images/background.jpg);
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        #button:hover{
-            background-color: #fca2c1 !important;
-        }
-        
-    </style>
 </head>
 <body>
     <div id="main_field">
-        <div id="menu" style="background: radial-gradient(#bdbdbd, #888888); display: flex; align-items: flex-start;">
-            <div style="width: 50%">
+        <div id="scores_field">
+            <div class="scores_blocks">
                 <div>
-                    <p style="text-align: center; margin: 0; padding: 5px; font-size: 24px;">Current record</p>
+                    <p class="scores_rules_caption">Current record</p>
                 </div>
                 <div>
-                    <p id="currentRecord" style="text-align: center; margin: 0; font-size: 30px;">---</p>
+                    <p id="current_record" class="scores_numbers">---</p>
                 </div>
             </div>
-            <div style="width: 50%">
+            <div class="scores_blocks">
                 <div>
-                    <p style="text-align: center; margin: 0; padding: 5px; font-size: 24px; ">Your score</p>
+                    <p class="scores_rules_caption">Your score</p>
                 </div>
                 <div>
-                    <p id="currentScore" style="text-align: center; margin: 0; font-size: 30px; color: white;">0</p>
+                    <p id="current_score" class="scores_numbers">0</p>
                 </div>
             </div>
         </div>
-        <div id="play_field"  style="background: linear-gradient(#eacdab, #fffefe);">
-            <div id = "overlayText" style="position:absolute; background-color:#f9f7f6c5; z-index: 100; width: 400px; height: 571px;">
-                <div style="height: 25% ;">
+        <div id="play_field">
+            <div id = "overlay_text">
+                <div class="height_1">
                     <div>
-                        <p style="text-align: center; margin: 0; padding: 5px; font-size: 25px;"">
+                        <p class="scores_rules_caption">
                             Rules
                         </p>
                     </div>
                     <div>
-                        <p style="margin: 0; padding: 5px; text-align: center;">
+                        <p class="text">
                             Click in any place of the play field, press space button or touch the screen to stop a brick. 
                             A part of the brick is sliced each time you stop it not exactely over the previous brick. 
                             Try to build as thick and high construction as possible.
                         </p>
                     </div>
                 </div>
-                <div style="height: 30%;">
-                    <div id="gameOver" style="display: none;">
-                        <p style="text-align: center; margin: 0; padding: 5px; font-size: 40px; color: #fca2c1;">Game over</p>
+                <div class="height_2">
+                    <div id="game_over">
+                        <p id="game_over_message">Game over</p>
                     </div>
                     <div>
-                        <p style="text-align: center; margin: 0; padding: 5px; font-size: 25px;">Top 3 scores</p>
+                        <p class="scores_rules_caption">Top 3 scores</p>
                     </div>
                     <div>
-                        <p id="leaderboard1" style="text-align: center; margin: 0; padding: 5px;"></p>
-                        <p id="leaderboard2" style="text-align: center; margin: 0; padding: 5px;"></p>
-                        <p id="leaderboard3" style="text-align: center; margin: 0; padding: 5px;"></p>
+                        <p id="leaderboard1"></p>
+                        <p id="leaderboard2"></p>
+                        <p id="leaderboard3"></p>
                     </div>
                 </div>
-                <div id="userName" style="display:block; height: 20%; text-align: center;">
-                    <p style="margin: 0; padding: 5px; font-size: 20px;">To start type your name:</p>
-                    <input type="text" id = "playerName" style="background-color: #f9f7f6c5; border-radius: 3px">
-                    <p id="warning" style="margin: 0; padding: 5px; font-size: 15px; color: #fca2c1; display: none;">Name can not be more than 10 characters</p>
+                <div id="user_name" class="height_3">
+                    <p class="scores_rules_caption">To start type your name:</p>
+                    <input type="text" id = "playerName">
+                    <p id="warning">Name can not be more than 10 characters</p>
                 </div>
-                <div style="text-align: center;">
-                        <input id="button" type="button" value="Start new game" onclick="startGame(event, false)" style="background-color: #f9f7f6c5; height: 60px; width: 50%; border-radius: 10px">
+                <div class="button_container">
+                        <input id="button" type="button" value="Start new game" onclick="startGame(event, false)">
                 </div>               
             </div>
-            <svg id ="donor" style="position:relative; display:none;" xmlns="http://www.w3.org/2000/svg">
+            <svg id ="donor" xmlns="http://www.w3.org/2000/svg">
                 <g>
                  <title>Layer 1</title>
-                 <rect id="donorRect" stroke="#000" style="stroke-width: 0;" id="svg_1" height="25" width="30%" y="0" x="0" fill="#888888"/>
+                 <rect id="donor_rect" stroke="#000" style="stroke-width: 0;"  height="25" width="30%" y="0" x="0" fill="#888888"/>
                 </g>
             </svg>
         </div>
